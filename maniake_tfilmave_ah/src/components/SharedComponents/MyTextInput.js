@@ -16,12 +16,13 @@ export default class MyTextInput extends Component {
                 borderWidth: 1,
                 borderColor: '#aaa',
                 borderRadius: 10,
-                color: '#555'
+                color: this.props?.color || '#555'
             }
         })
 
         return (
             <TextInput 
+                multiline={this.props?.multiline || false}
                 style={styles.textInput}
                 placeholder={this.props.placeholder}
                 placeholderTextColor={'#aaa'}

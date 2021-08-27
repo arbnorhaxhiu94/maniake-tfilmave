@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "887021367043",
+    "project_id": "maniake-t-filmave-ah",
+    "storage_bucket": "maniake-t-filmave-ah.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:887021367043:android:2aa63c0fd2959de8288336",
+        "android_client_info": {
+          "package_name": "com.maniake_tfilmave_ah"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "887021367043-co0r3eke034opodb3bj20ek2b2rqgiuv.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCms6hiIUw5XRP_HWbtsEtIaZI2_v4hjHo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "887021367043-co0r3eke034opodb3bj20ek2b2rqgiuv.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,10 +1,14 @@
 import React, {Component} from "react"
-import { StyleSheet, View, Text, ImageBackground, Dimensions, StatusBar, Animated, FlatList, Image, TouchableOpacity, TextInput } from "react-native"
-import { background_black_color } from "../../assets/colors"
+import { StyleSheet, View, Text, ImageBackground, Dimensions, StatusBar, Animated, FlatList, Image, TouchableOpacity, TextInput, ActivityIndicator } from "react-native"
+import { connect } from "react-redux"
+import { background_black_color, red_color } from "../../assets/colors"
+import MovieCard from "../../components/MovieComponents/MovieCard"
 import MyHeader from "../../components/SharedComponents/MyHeader"
+import MyLoadingView from "../../components/SharedComponents/MyLoadingView"
 import MySearchInput from "../../components/SharedComponents/MySearchInput"
+import { getRecommendedMovies } from "../../redux/reducers/GetRecommendedMoviesReducer"
 
-export default class MainScreen extends Component {
+class MainScreen extends Component {
     constructor(props) {
         super(props)
         this.state = {
@@ -49,44 +53,11 @@ export default class MainScreen extends Component {
         }
     }
 
-    render() {
+    componentDidMount() {
+        this.props.getRecommendedMovies()
+    }
 
-        const styles = StyleSheet.create({
-            movieContainer: {
-                flex: 1,
-                width: '100%',
-                // height: 300,
-                justifyContent: 'flex-start',
-                alignItems: 'center',
-                borderWidth: 1,
-                borderColor: '#555',
-                borderRadius: 20,
-                paddingBottom: 20,
-                marginVertical: 20,
-                overflow: 'hidden',
-                backgroundColor: '#222',
-                elevation: 10
-            },
-            image: {
-                width: '100%', 
-                height: 200, 
-                borderTopRightRadius: 20,
-                borderTopLeftRadius: 20
-            },
-            title: {
-                fontSize: 18,
-                color: '#ddd',
-                fontWeight: 'bold',
-                paddingVertical: 10
-            },
-            desc: {
-                fontSize: 14,
-                color: '#aaa',
-                width: '100%',
-                paddingLeft: 10,
-                paddingRight: 5
-            }
-        })
+    render() {
 
         return (
             <View style={{flex: 1, backgroundColor: background_black_color}}>
@@ -96,11 +67,10 @@ export default class MainScreen extends Component {
                     navigation={this.props.navigation}
                     backgroundColor={background_black_color}
                     textColor={'#ddd'} />
+                {this.props.loading ? 
+                <MyLoadingView />
+                :
                 <View style={{flex: 1}}>
-                    {/* <MySearchInput 
-                        placeholder={'Emri i filmit...'}
-                        buttonText={'Kërko'}
-                        onPress={() => alert('Search')}/> */}
                     <FlatList 
                         style={{
                             width: Dimensions.get('screen').width,
@@ -109,23 +79,38 @@ export default class MainScreen extends Component {
                         }}
                         showsVerticalScrollIndicator={false}
                         keyExtractor={(item) => item.id}
-                        data={this.state.movies}
+                        data={this.props.movies}
                         renderItem={({item}) => {
                             return(
-                                <TouchableOpacity 
-                                    style={styles.movieContainer}
-                                    onPress={() => this.props.navigation.navigate('MovieDetailsScreen', {item: item})} >
-                                    <Image 
-                                        source={{uri: item.url}}
-                                        style={styles.image} />
-                                    <Text style={styles.title}>{item.name}</Text>
-                                    <Text style={styles.desc}>{item.desc}</Text>
-                                </TouchableOpacity>
+                                <MovieCard 
+                                    onPress={() => 
+                                        this.props.navigation.navigate('MovieDetailsScreen', {
+                                            item: item
+                                        })}
+                                    item={item} />
                             )
                         }} />
-                </View>
-                
+                </View>}
             </View>
         )
     }
 }
+
+const mapStateToProps = (state) => {
+    return {
+        loading: state.getRecommendedMoviesReducer.loading,
+        movies: state.getRecommendedMoviesReducer.movies,
+        error: state.getRecommendedMoviesReducer.error
+    }
+}
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        getRecommendedMovies: () => dispatch(getRecommendedMovies())
+    }
+}
+
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(MainScreen)
