@@ -17,7 +17,8 @@ import MyDrawer from './src/navigation/MyDrawer';
 import AuthScreen from './src/screens/AuthScreens/AuthScreen';
 import DeviceInfo from 'react-native-device-info';
 import { setDeviceId } from './src/configs/device_id';
-
+import { MySplashScreen } from './src/screens/MySplashScreen';
+import SplashScreen from 'react-native-splash-screen'
 
 class App extends Component {
   constructor(props) {
@@ -27,6 +28,7 @@ class App extends Component {
 
   componentDidMount() {
     setDeviceId(DeviceInfo.getDeviceId())
+    SplashScreen.hide()
   }
 
   render() {
@@ -35,7 +37,8 @@ class App extends Component {
         <StatusBar 
           backgroundColor={background_black_color} 
           barStyle={'light-content'} />
-        <MyDrawer />
+          {/* <MySplashScreen /> */}
+          <MyDrawer />
         {/* <AuthScreen /> */}
       </SafeAreaView>
     );

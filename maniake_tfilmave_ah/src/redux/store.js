@@ -5,6 +5,7 @@ import { GetMovieCommentsReducer } from './reducers/GetMovieCommentsReducer';
 import { GetMovieDetailsReducer } from './reducers/GetMovieDetailsReducer';
 import { GetMyMoviesReducer } from './reducers/GetMyMoviesReducer';
 import { GetRecommendedMoviesReducer } from './reducers/GetRecommendedMoviesReducer';
+import GetTopTwentyMoviesReducer from './reducers/GetTopTwentyMoviesReducer';
 
 // Note: this API requires redux@>=3.1.0
 
@@ -13,7 +14,8 @@ const rootReducer = combineReducers({
     getMovieCommentsReducer: GetMovieCommentsReducer,
     addMovieCommentsReducer: AddMovieCommentsReducer,
     getMyMoviesReducer: GetMyMoviesReducer,
-    getMovieDetailsReducer: GetMovieDetailsReducer
+    getMovieDetailsReducer: GetMovieDetailsReducer,
+    getTopTwentyMoviesReducer: GetTopTwentyMoviesReducer
 })
 
 const store = createStore(rootReducer, applyMiddleware(thunk));

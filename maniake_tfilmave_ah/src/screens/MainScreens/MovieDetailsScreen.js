@@ -12,6 +12,10 @@ import { connect } from "react-redux"
 import MyLoadingView from "../../components/SharedComponents/MyLoadingView"
 import { getMovieDetails } from "../../redux/reducers/GetMovieDetailsReducer"
 
+import firestore from '@react-native-firebase/firestore'
+import { blocked_user, checkIfBlockedUser, device_id } from "../../configs/device_id"
+import ErrorView from "../../components/SharedComponents/ErrorView"
+
 class MovieDetailsScreen extends Component {
     constructor(props) {
         super(props)
@@ -47,12 +51,24 @@ class MovieDetailsScreen extends Component {
             this.setState({
                 maniacs_rating: ratings_sum/ratings.length
             })
+
+            await firestore()
+                .collection('movies')
+                .doc(this.props.route?.params?.item?.movie_id)
+                .update({
+                    maniaket: ratings_sum/ratings.length,
+                })
+                .then(() => {
+                    console.log('Rating updated!');
+                })
+                .catch(e => console.log(e))
         }
     }
 
     componentDidMount() {
         this.getMovieDetails()
         this.loadComments()
+        checkIfBlockedUser(device_id)
     }
 
     render() {
@@ -99,6 +115,8 @@ class MovieDetailsScreen extends Component {
                     textColor={'#ddd'} />
                 {this.props.loading1 ? 
                 <MyLoadingView />
+                : this.props.error ? 
+                <ErrorView />
                 :
                 <ScrollView 
                     keyboardShouldPersistTaps={'always'}
@@ -133,12 +151,16 @@ class MovieDetailsScreen extends Component {
                             play={false}
                             videoId={this.props.data?.youtube_id} />
                     </View>
+                    {blocked_user ? null 
+                    :
+                    <>
                     <TextWithSideLines 
                         title={'Vlerësimi im'} />
                     <MyRating 
                         movie={this.props.data}
                         my_rating={this.props.data?.imdb}
                         loadComments={this.loadComments} />
+                    </>}
                     <TextWithSideLines 
                         title={'Komentet'} />
                     {this.props.loading ? 

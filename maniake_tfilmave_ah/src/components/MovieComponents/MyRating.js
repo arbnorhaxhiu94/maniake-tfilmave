@@ -6,6 +6,7 @@ import { gold_color, red_color } from "../../assets/colors"
 import { device_id } from "../../configs/device_id"
 import { addMovieComment } from "../../redux/reducers/AddMovieCommentReducer"
 import { getMovieComments } from "../../redux/reducers/GetMovieCommentsReducer"
+import { getMyMovies } from "../../redux/reducers/GetMyMoviesReducer"
 import MyButton from "../SharedComponents/MyButton"
 import MyTextInput from "../SharedComponents/MyTextInput"
 
@@ -88,6 +89,7 @@ class MyRating extends Component {
         if (this.props.success) {
             // alert('OK')
            this.props.loadComments()
+           this.props.getMyMovies()
         }
     }
 
@@ -175,7 +177,8 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
     return {
         addMovieComment: (data) => dispatch(addMovieComment(data)),
-        getMovieComments: (movie_id) => dispatch(getMovieComments(movie_id))
+        getMovieComments: (movie_id) => dispatch(getMovieComments(movie_id)),
+        getMyMovies: () => dispatch(getMyMovies())
     }
 }
 

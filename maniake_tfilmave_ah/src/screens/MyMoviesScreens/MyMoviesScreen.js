@@ -3,6 +3,7 @@ import { StyleSheet, View, Text, ImageBackground, Dimensions, StatusBar, Animate
 import { connect } from "react-redux"
 import { background_black_color } from "../../assets/colors"
 import RatingStars from "../../components/MovieComponents/RatingStars"
+import ErrorView from "../../components/SharedComponents/ErrorView"
 import MyHeader from "../../components/SharedComponents/MyHeader"
 import { getMyMovies } from "../../redux/reducers/GetMyMoviesReducer"
 
@@ -71,6 +72,9 @@ class MyMoviesScreen extends Component {
                     navigation={this.props.navigation}
                     backgroundColor={background_black_color}
                     textColor={'#ddd'} />
+                {this.props.error ? 
+                <ErrorView />
+                :
                 <View style={{flex: 1}}>
                     <FlatList 
                         style={{
@@ -96,14 +100,14 @@ class MyMoviesScreen extends Component {
                                     <Image 
                                         source={{uri: item.movie_img_url}}
                                         style={styles.image} />
-                                    <View style={{paddingTop: 15}}>
+                                    <View style={{paddingTop: 15, flex: 3}}>
                                         <Text style={styles.title}>{item.movie_name}</Text>
                                         <Text style={styles.desc}>{item.comment}</Text>
                                     </View>
                                 </TouchableOpacity>
                             )
                         }} />
-                </View>
+                </View>}
                 
             </View>
         )

@@ -52,19 +52,19 @@ export default class MovieMainInfos extends Component {
                     </View>
                     <View style={{flexDirection: 'row'}}>
                         <Text style={{...styles.info, fontWeight: 'bold'}}>Buxheti: </Text>
-                        <Text style={styles.info}>${movie?.budget}M</Text>
+                        <Text style={styles.info}>{movie?.budget ? `$${movie?.budget}M` : "S'ka info"}</Text>
                     </View>
                     <View style={{flexDirection: 'row'}}>
                         <Text style={{...styles.info, fontWeight: 'bold'}}>Box-office: </Text>
-                        <Text style={styles.info}>${movie?.box_office}M</Text>
+                        <Text style={styles.info}>{movie?.box_office ? `$${movie?.box_office}M` : "S'ka info"}</Text>
                     </View>
                     <View style={{flexDirection: 'row'}}>
                         <Text style={{...styles.info, fontWeight: 'bold'}}>Imdb: </Text>
-                        <Text style={styles.info}>{movie?.imdb}</Text>
+                        <Text style={styles.info}>{movie?.imdb || "S'ka info"}</Text>
                     </View>
                     <View style={{flexDirection: 'row'}}>
-                        <Text style={{...styles.info, fontWeight: 'bold'}}>Velrësimi nga MF: </Text>
-                        <Text style={styles.info}>{this.props.maniacs_rating}</Text>
+                        <Text style={{...styles.info, fontWeight: 'bold'}}>Vlerësimi nga MF: </Text>
+                        <Text style={styles.info}>{this.props.maniacs_rating ? this.props.maniacs_rating?.toFixed(2) : "S'ka vlerësime"}</Text>
                     </View>
                     <View style={{flexDirection: 'row', width: '75%'}}>
                         <Text style={{...styles.info, fontWeight: 'bold'}}>Aktorët/et: </Text>
